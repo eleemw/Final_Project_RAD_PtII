@@ -3,21 +3,17 @@ public inherited sharing class RecipeController {
     //adds ingredients to recipe and saves to database
     @AuraEnabled
     public static void addIngredient(String ingredientName, Integer measurementAmount, String measurementType, ID recipeId){
-        try {
-	        //Create ingredient sObject in memory and insert to database
-            Ingredient__c ingred = new Ingredient__c();
+	    //Create ingredient sObject in memory and insert to database
+        Ingredient__c ingred = new Ingredient__c();
 
-            //add ingredient data into the ingredient record for the recipe being passed in
-            ingred.Recipe__c = recipeId;
-            ingred.Name = ingredientName;
-            ingred.Measurement__c = measurementAmount;
-            ingred.Measurement_Type__c = measurementType; 
+        //add ingredient data into the ingredient record for the recipe being passed in
+        ingred.Recipe__c = recipeId;
+        ingred.Name = ingredientName;
+        ingred.Measurement__c = measurementAmount;
+        ingred.Measurement_Type__c = measurementType; 
         
-            //insert ingredients into the database
-            insert ingred;
-        } catch (DMLException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }
+        //insert ingredients into the database
+        insert ingred;
     }
     
     //this method gets the list of ingredients that are children of a Recipe. 
