@@ -15,11 +15,15 @@ public inherited sharing class RecipeController {
         
             //insert ingredients into the database
             insert ingred;
-        } catch (DMLException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }
-    }
-    
+        } catch (Exception e) {
+        	if(e.getMessage().contains('Measurement Type')){
+                System.debug('Insert failed. Bad value for restricted picklist field Measurement Type.');
+           	}
+            else{
+                System.debug(e.getMessage());
+            }
+        }        
+    }    
     //this method gets the list of ingredients that are children of a Recipe. 
     @AuraEnabled
     public static List < Ingredient__c > generateGroceryList(Id recipeId){
