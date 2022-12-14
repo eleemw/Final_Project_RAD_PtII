@@ -27,16 +27,23 @@ public inherited sharing class RecipeController {
     //this method gets the list of ingredients that are children of a Recipe. 
     @AuraEnabled
     public static List < Ingredient__c > generateGroceryList(Id recipeId){
+    
+        try {    
+	        //queries for and returns the ingredient records and data for the recipe requested
+	        List < Ingredient__c > ingredList = [SELECT Id, Name, Measurement__c, Measurement_Type__c, Notes__c
+                                                FROM Ingredient__c
+                                                WHERE Recipe__c =: recipeId];
         
-	//queries for and returns the ingredient records and data for the recipe requested
-	List < Ingredient__c > ingredList = [SELECT Id, Name, Measurement__c, Measurement_Type__c, Notes__c
-                                         FROM Ingredient__c
-                                         WHERE Recipe__c =: recipeId];
+            System.Debug('Needed Ingredients' + ingredList);
         
-    System.Debug('Needed Ingredients' + ingredList);
-        
-    //return list of ingredients needed;
-    return ingredList;    		
+            //return list of ingredients needed;
+            return ingredList;
+        } catch (QueryException qe) {
+            System.debug(qe.getMessage());
+        } 
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }            		
     }
 
     //Scale the recipe and return the list of scaled ingredients
