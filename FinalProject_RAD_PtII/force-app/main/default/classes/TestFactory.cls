@@ -63,4 +63,57 @@ public class TestFactory {
         insert u;
         return u;
     }
+
+    //---------------Final Project TestFactory Methods------------------------------------------------
+    //---------------------------METHOD 1-------------------------------------------------------------
+    public static Ingredient__c[] generateIngredients(Integer numberOfIngredients) { //It should take a parameter that dictates the number of Ingredient objects to be created
+       // Pull this out into separate method
+       // Recipe__c testRecipe = new Recipe__c(Name = 'Test Recipe');      // Create a new test Recipe object
+       //insert testRecipe;                                               // Comit test Recipe object
+
+        List<Ingredient__c> ingredientList = new List<Ingredient__c>(); // Create a list of Ingredient sObject records
+
+        for (Integer i = 0; i < numberOfIngredients; i++) {
+                i = i++;
+                Ingredient__c newIngredient = new Ingredient__c();
+                newIngredient.Name = 'Ingredient ' + i;
+               // newIngredient.Recipe__c = testRecipe.Id;
+                //newIngredient.Measurement__c =        // Pass in as a parameter
+                //newIngredient.Measurement_Type__c =   // Pass in as a parameter
+                ingredientList.add(newIngredient);
+                
+        }
+
+        // Return the list of Ingredients generated, DO NOT insert into org
+        return ingredientList;
+    }
+
+    //---------------------------METHOD 2-------------------------------------------------------------
+    public static Ingredient__c[] insertIngredients(Integer numberOfIngredients) { //It should take a parameter that dictates the number of Ingredient objects to be created
+        // Call generateIngredients method passing in # of Ingredients argument and set it equal to a new List of Ingredients varaible
+        List<Ingredient__c> ingredientsToInsert = new List<Ingredient__c>(generateIngredients(numberOfIngredients)); 
+        
+        insert ingredientsToInsert;     // Insert list of Ingredients into org
+                 
+        return ingredientsToInsert;     // Return the list of Ingredients inserted into org
+    }
+
+    //---------------------------METHOD 3-------------------------------------------------------------
+    public static Recipe__c[] generateRecipes(Integer numberOfRecipes,List<Ingredient__c> childIngredients) { //It should take a parameter that dictates the number of Recipes to be created and a list of ingredients to add as child records
+         List<Recipe__c> recipeList = new List<Recipe__c>(); // Create a list of Recipe sObject records
+ 
+         for (Integer i = 0; i < numberOfRecipes; i++) {
+                 i = i++;
+                 Recipe__c newRecipe = new Recipe__c();
+                 newRecipe.Name = 'Recipe ' + i;
+                 newRecipe.Description__c = 'Test Description for Recipe ' +i;
+                
+                 recipeList.add(newRecipe);
+                 
+         }
+         insert recipeList;     // Insert list of Recipes into org
+                 
+         return recipeList;     // Return the list of Recipes inserted into org
+
+     } 
 }
