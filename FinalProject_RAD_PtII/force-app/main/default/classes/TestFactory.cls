@@ -66,7 +66,8 @@ public class TestFactory {
 
     //---------------Final Project TestFactory Methods------------------------------------------------
     //---------------------------METHOD 1-------------------------------------------------------------
-    public static Ingredient__c[] generateIngredients(Integer numberOfIngredients) { //It should take a parameter that dictates the number of Ingredient objects to be created
+    @TestVisible
+    public static Ingredient__c[] generateIngredients(Integer numberOfIngredients = 1) { //It should take a parameter that dictates the number of Ingredient objects to be created
        // Pull this out into separate method
        // Recipe__c testRecipe = new Recipe__c(Name = 'Test Recipe');      // Create a new test Recipe object
        //insert testRecipe;                                               // Comit test Recipe object
@@ -77,9 +78,9 @@ public class TestFactory {
                 i = i++;
                 Ingredient__c newIngredient = new Ingredient__c();
                 newIngredient.Name = 'Ingredient ' + i;
-               // newIngredient.Recipe__c = testRecipe.Id;
-                //newIngredient.Measurement__c =        // Pass in as a parameter
-                //newIngredient.Measurement_Type__c =   // Pass in as a parameter
+                newIngredient.Recipe__c = testRecipe.Id;
+                newIngredient.Measurement__c = (Math.Random() * 10);       
+                newIngredient.Measurement_Type__c = 'Tsp';
                 ingredientList.add(newIngredient);
                 
         }
